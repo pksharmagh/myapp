@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Timeline Viewer Styles
+   Vertical timeline with scroll-triggered reveals and progress indicator
+   ========================================================================== */
+
+/* Progress Journey Indicator */
+.timeline-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+  z-index: var(--z-overlay);
+  transition: width 0.1s linear;
+}
+
+/* Timeline Container */
+.timeline {
+  position: relative;
+  padding: var(--space-4xl) var(--space-md);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Vertical Connecting Line */
+.timeline__line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-gold);
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+/* Timeline Node */
+.timeline__node {
+  position: absolute;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: var(--color-gold);
+  border: 3px solid var(--color-cream);
+  border-radius: var(--radius-full);
+  transform: translateX(-50%);
+  z-index: var(--z-above);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Timeline Item (card wrapper) */
+.timeline__item {
+  position: relative;
+  width: 45%;
+  margin-bottom: var(--space-3xl);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.timeline__item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Alternating left/right */
+.timeline__item--left {
+  margin-right: auto;
+  margin-left: 0;
+  text-align: right;
+  padding-right: var(--space-2xl);
+}
+
+.timeline__item--right {
+  margin-left: auto;
+  margin-right: 0;
+  text-align: left;
+  padding-left: var(--space-2xl);
+}
+
+/* Timeline Card */
+.timeline__card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.timeline__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Stage Badge */
+.timeline__badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--color-white);
+  background: var(--color-gold);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Card Title */
+.timeline__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+  line-height: var(--leading-snug);
+}
+
+/* Card Description */
+.timeline__description {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-md);
+}
+
+/* Mother's Perspective */
+.timeline__perspective {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--color-brown);
+  border-left: 2px solid var(--color-gold-light);
+  padding-left: var(--space-md);
+  margin-top: var(--space-md);
+  line-height: var(--leading-relaxed);
+}
+
+/* Photo Frame */
+.timeline__photo {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(-1deg);
+}
+
+.timeline__item--right .timeline__photo {
+  transform: rotate(1deg);
+}
+
+.timeline__item:nth-child(3n) .timeline__photo {
+  transform: rotate(-2deg);
+}
+
+.timeline__item:nth-child(3n+2) .timeline__photo {
+  transform: rotate(2deg);
+}
+
+/* Emotional Quote Overlay */
+.timeline__quote {
+  width: 100%;
+  padding: var(--space-4xl) var(--space-xl);
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.timeline__quote.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline__quote::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-overlay-light);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+}
+
+.timeline__quote-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-2xl);
+  color: var(--color-brown-deep);
+  line-height: var(--leading-snug);
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+}
+
+/* Empty State */
+.timeline__empty {
+  text-align: center;
+  padding: var(--space-5xl) var(--space-xl);
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+}
+
+.timeline__empty-icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-lg);
+  opacity: 0.6;
+}
+
+.timeline__empty-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.timeline__empty-text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-xl);
+}
+
+.timeline__empty-link {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-white);
+  background: var(--color-gold);
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.timeline__empty-link:hover {
+  background: var(--color-gold-dark);
+  transform: translateY(-1px);
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .timeline__line {
+    left: 20px;
+  }
+
+  .timeline__node {
+    left: 20px;
+  }
+
+  .timeline__item {
+    width: calc(100% - 50px);
+    margin-left: 50px;
+    margin-right: 0;
+    text-align: left;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .timeline__item--left {
+    text-align: left;
+    padding-right: 0;
+  }
+
+  .timeline__quote {
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .timeline__quote-text {
+    font-size: var(--text-xl);
+  }
+}

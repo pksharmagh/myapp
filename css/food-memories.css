@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Food Memories Styles
+   Recipe-card aesthetic with warm backgrounds and emotional captions
+   ========================================================================== */
+
+/* Hero Section */
+.food-hero {
+  text-align: center;
+  padding: var(--space-5xl) var(--space-xl) var(--space-3xl);
+  background: linear-gradient(180deg, var(--color-beige) 0%, var(--color-cream) 100%);
+}
+
+.food-hero__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--color-brown-deep);
+  margin-bottom: var(--space-md);
+  line-height: var(--leading-tight);
+}
+
+.food-hero__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-text-light);
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  line-height: var(--leading-relaxed);
+}
+
+/* Food Grid */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-xl);
+  padding: var(--space-2xl) var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Food Section Group */
+.food-section {
+  margin-bottom: var(--space-3xl);
+  padding: 0 var(--space-xl);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.food-section__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--color-brown-deep);
+  padding-top: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-top: 2px solid var(--color-gold);
+}
+
+/* Food Card */
+.food-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.food-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light));
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.food-card__icon {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-sm);
+}
+
+.food-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+  line-height: var(--leading-snug);
+}
+
+.food-card__memory {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.food-card__caption {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--color-brown);
+  line-height: var(--leading-relaxed);
+  border-left: 2px solid var(--color-gold-light);
+  padding-left: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.food-card__photo {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+/* Add Food Memory Button */
+.food-add-btn {
+  display: block;
+  width: fit-content;
+  margin: var(--space-2xl) auto;
+  padding: var(--space-md) var(--space-2xl);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-white);
+  background: var(--color-gold);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.food-add-btn:hover {
+  background: var(--color-gold-dark);
+  transform: translateY(-1px);
+}
+
+/* Inline Food Form */
+.food-form {
+  max-width: var(--max-width-content);
+  margin: var(--space-xl) auto;
+  padding: var(--space-xl);
+  background: var(--color-beige);
+  border-radius: var(--radius-lg);
+  display: none;
+}
+
+.food-form--visible {
+  display: block;
+}
+
+.food-form__group {
+  margin-bottom: var(--space-md);
+}
+
+.food-form__label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+}
+
+.food-form__input,
+.food-form__textarea {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-white);
+  border: 1px solid var(--color-beige-dark);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-base);
+  box-sizing: border-box;
+}
+
+.food-form__input:focus,
+.food-form__textarea:focus {
+  border-color: var(--color-gold);
+}
+
+.food-form__textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.food-form__submit {
+  padding: var(--space-sm) var(--space-xl);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-white);
+  background: var(--color-gold);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.food-form__submit:hover {
+  background: var(--color-gold-dark);
+}
+
+/* Empty State */
+.food-empty {
+  text-align: center;
+  padding: var(--space-5xl) var(--space-xl);
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+}
+
+.food-empty__icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-lg);
+  opacity: 0.6;
+}
+
+.food-empty__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.food-empty__text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: var(--leading-relaxed);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .food-grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .food-hero {
+    padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+  }
+}

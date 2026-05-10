@@ -7,6 +7,10 @@ import { initParticles } from './particles.js';
 import { initAnimations } from './animations.js';
 import { registerRoute, navigate, initRouter } from './router.js';
 import { renderMemoryBuilder } from './memory-builder.js';
+import { renderTimeline } from './timeline-viewer.js';
+import { renderFoodMemories } from './food-memories.js';
+import { renderPlaceMemories } from './place-memories.js';
+import { renderTribute } from './tribute.js';
 
 /**
  * Set up the landing page interactions
@@ -28,8 +32,18 @@ function setupNavigation() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
 
-  // Show nav on scroll past hero
+  // Show/hide nav based on route and scroll
   function updateNavVisibility() {
+    const hash = window.location.hash || '#/';
+
+    // Always show nav on non-landing pages
+    if (hash !== '#/') {
+      nav.classList.remove('nav--hidden');
+      nav.classList.add('nav--visible');
+      return;
+    }
+
+    // On landing page, show nav on scroll past hero
     const scrollY = window.scrollY;
     const heroHeight = window.innerHeight;
 
@@ -43,6 +57,7 @@ function setupNavigation() {
   }
 
   window.addEventListener('scroll', updateNavVisibility, { passive: true });
+  window.addEventListener('hashchange', updateNavVisibility);
   updateNavVisibility();
 }
 
@@ -60,19 +75,19 @@ function setupRoutes() {
   });
 
   registerRoute('#/timeline', () => {
-    return '<section class="section section--centered"><div class="container"><h2 class="section__title">Timeline</h2><p class="section__content">A timeline of memories...</p></div></section>';
+    return renderTimeline();
   });
 
   registerRoute('#/food', () => {
-    return '<section class="section section--centered"><div class="container"><h2 class="section__title">Food Memories</h2><p class="section__content">Meals that shaped us...</p></div></section>';
+    return renderFoodMemories();
   });
 
   registerRoute('#/places', () => {
-    return '<section class="section section--centered"><div class="container"><h2 class="section__title">Places</h2><p class="section__content">The places that hold our stories...</p></div></section>';
+    return renderPlaceMemories();
   });
 
   registerRoute('#/tribute', () => {
-    return '<section class="section section--centered"><div class="container"><h2 class="section__title">Tribute</h2><p class="section__content">A tribute to her...</p></div></section>';
+    return renderTribute();
   });
 }
 
