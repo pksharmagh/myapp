@@ -6,6 +6,7 @@
 import { getAllMemories } from './memory-store.js';
 import { generateSummary, generateTribute, generateTitle } from './ai-engine.js';
 import { stages } from './data/stages.js';
+import { escapeHtml, escapeAttr } from './utils.js';
 
 /**
  * Render the tribute view
@@ -46,14 +47,14 @@ export function renderTribute() {
   const title = generateTitle(flatMemories);
   const titleSection = document.createElement('section');
   titleSection.className = 'tribute__section';
-  titleSection.innerHTML = `<h1 class="tribute__title">${title}</h1>`;
+  titleSection.innerHTML = `<h1 class="tribute__title">${escapeHtml(title)}</h1>`;
   container.appendChild(titleSection);
 
   // Section 2: Life Summary
   const summary = generateSummary(flatMemories);
   const summarySection = document.createElement('section');
   summarySection.className = 'tribute__section';
-  summarySection.innerHTML = `<div class="tribute__summary">${summary}</div>`;
+  summarySection.innerHTML = `<div class="tribute__summary">${escapeHtml(summary)}</div>`;
   container.appendChild(summarySection);
 
   // Section 3: Photo Montage
@@ -88,8 +89,8 @@ export function renderTribute() {
   cardSection.className = 'tribute__section';
   cardSection.innerHTML = `
     <div class="tribute__card">
-      <div class="tribute__card-text">${tributeText}</div>
-      <p class="tribute__card-closing">${closingLine}</p>
+      <div class="tribute__card-text">${escapeHtml(tributeText)}</div>
+      <p class="tribute__card-closing">${escapeHtml(closingLine)}</p>
     </div>
   `;
   container.appendChild(cardSection);

@@ -167,7 +167,7 @@ export function createVoiceRecorder(onRecordingComplete) {
       audioElement.pause();
       audioElement = null;
     }
-    if (audioUrl) {
+    if (audioUrl && audioUrl.startsWith('blob:')) {
       URL.revokeObjectURL(audioUrl);
     }
     audioBlob = null;

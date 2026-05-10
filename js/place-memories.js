@@ -5,6 +5,7 @@
 
 import { getAllMemories } from './memory-store.js';
 import { stages } from './data/stages.js';
+import { escapeHtml, escapeAttr } from './utils.js';
 
 /**
  * Render the place memories view
@@ -62,7 +63,6 @@ export function renderPlaceMemories() {
   map.className = 'places__map';
 
   // SVG connections
-  const locations = Array.from(locationMap.keys());
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'places__connections');
   svg.setAttribute('width', '100%');
@@ -85,7 +85,7 @@ export function renderPlaceMemories() {
         <span class="place-marker__icon">\u{1F4CD}</span>
         <span class="place-marker__count">${memories.length}</span>
       </div>
-      <span class="place-marker__label">${location}</span>
+      <span class="place-marker__label">${escapeHtml(location)}</span>
     `;
 
     marker.addEventListener('click', () => openPlaceDetail(container, location, memories));
@@ -169,15 +169,15 @@ function openPlaceDetail(container, location, memories) {
 
     let photoHtml = '';
     if (memory.photo) {
-      photoHtml = `<img class="place-detail__memory-photo" src="${memory.photo}" alt="${memory.title || 'Memory'}">`;
+      photoHtml = `<img class="place-detail__memory-photo" src="${escapeAttr(memory.photo)}" alt="${escapeAttr(memory.title || 'Memory')}">`;
     }
 
     const description = memory.description || memory.text || '';
     const snippet = description.length > 200 ? description.substring(0, 200) + '...' : description;
 
     memoryEl.innerHTML = `
-      <h3 class="place-detail__memory-title">${memory.title || 'Untitled'}</h3>
-      <p class="place-detail__memory-text">${snippet}</p>
+      <h3 class="place-detail__memory-title">${escapeHtml(memory.title || 'Untitled')}</h3>
+      <p class="place-detail__memory-text">${escapeHtml(snippet)}</p>
       ${photoHtml}
     `;
 

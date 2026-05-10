@@ -31,12 +31,16 @@ function loadAll() {
 
 /**
  * Persist all memories to localStorage
+ * @param {object} data - The data to persist
+ * @returns {boolean} True if save succeeded, false if it failed (e.g. quota exceeded)
  */
 function persistAll(data) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    return true;
   } catch (e) {
     console.warn('Failed to save to localStorage:', e.message);
+    return false;
   }
 }
 
@@ -45,7 +49,7 @@ function persistAll(data) {
  * Generates a UUID if the memory is new.
  * @param {string} stageId
  * @param {object} memory
- * @returns {object} The saved memory object
+ * @returns {{memory: object, saved: boolean}} The saved memory object and whether persistence succeeded
  */
 export function saveMemory(stageId, memory) {
   const data = loadAll();
@@ -80,8 +84,8 @@ export function saveMemory(stageId, memory) {
     data[stageId].push(memory);
   }
 
-  persistAll(data);
-  return memory;
+  const saved = persistAll(data);
+  return { memory, saved };
 }
 
 /**

@@ -6,6 +6,7 @@
 import { getAllMemories } from './memory-store.js';
 import { stages } from './data/stages.js';
 import { generateMotherPerspective } from './ai-engine.js';
+import { escapeHtml, escapeAttr } from './utils.js';
 
 const cinematicQuotes = [
   'She measured your life in meals cooked and prayers whispered.',
@@ -20,11 +21,37 @@ const cinematicQuotes = [
   'In every city you lived, she lived through your voice on the phone.'
 ];
 
+// Track the progress bar element and scroll listener for cleanup
+let progressBarEl = null;
+let scrollHandler = null;
+let timelineObserver = null;
+
+/**
+ * Clean up timeline resources (progress bar, scroll listener, observer)
+ */
+export function cleanupTimeline() {
+  if (scrollHandler) {
+    window.removeEventListener('scroll', scrollHandler);
+    scrollHandler = null;
+  }
+  if (progressBarEl && progressBarEl.parentNode) {
+    progressBarEl.parentNode.removeChild(progressBarEl);
+    progressBarEl = null;
+  }
+  if (timelineObserver) {
+    timelineObserver.disconnect();
+    timelineObserver = null;
+  }
+}
+
 /**
  * Render the timeline view
  * @returns {HTMLElement}
  */
 export function renderTimeline() {
+  // Clean up any previous timeline resources before rendering
+  cleanupTimeline();
+
   const container = document.createElement('div');
   container.className = 'timeline-wrapper';
 
@@ -75,7 +102,7 @@ export function renderTimeline() {
       const quote = document.createElement('div');
       quote.className = 'timeline__quote animate-on-scroll';
       quote.innerHTML = `
-        <p class="timeline__quote-text">"${cinematicQuotes[quoteIndex % cinematicQuotes.length]}"</p>
+        <p class="timeline__quote-text">"${escapeHtml(cinematicQuotes[quoteIndex % cinematicQuotes.length])}"</p>
       `;
       timeline.appendChild(quote);
       quoteIndex++;
@@ -95,20 +122,22 @@ export function renderTimeline() {
     // Card content
     const description = memory.description || memory.text || '';
     const snippet = description.length > 150 ? description.substring(0, 150) + '...' : description;
-    const perspective = generateMotherPerspective(description || memory.title || '', memory.stageId);
+
+    // Use stored perspective if available, otherwise generate
+    const perspective = memory._motherPerspective || generateMotherPerspective(description || memory.title || '', memory.stageId);
 
     let photoHtml = '';
     if (memory.photo) {
-      photoHtml = `<img class="timeline__photo" src="${memory.photo}" alt="${memory.title || 'Memory photo'}">`;
+      photoHtml = `<img class="timeline__photo" src="${escapeAttr(memory.photo)}" alt="${escapeAttr(memory.title || 'Memory photo')}">`;
     }
 
     item.innerHTML = `
       <div class="timeline__card">
-        <span class="timeline__badge">${memory.stage.icon} ${memory.stage.title}</span>
+        <span class="timeline__badge">${escapeHtml(memory.stage.icon)} ${escapeHtml(memory.stage.title)}</span>
         ${photoHtml}
-        <h3 class="timeline__title">${memory.title || 'Untitled Memory'}</h3>
-        <p class="timeline__description">${snippet}</p>
-        <blockquote class="timeline__perspective">${perspective}</blockquote>
+        <h3 class="timeline__title">${escapeHtml(memory.title || 'Untitled Memory')}</h3>
+        <p class="timeline__description">${escapeHtml(snippet)}</p>
+        <blockquote class="timeline__perspective">${escapeHtml(perspective)}</blockquote>
       </div>
     `;
 
@@ -128,27 +157,29 @@ export function renderTimeline() {
  * Initialize scroll progress bar and intersection observers for timeline
  */
 function initTimelineScroll() {
+  // Clean up any existing resources first
+  cleanupTimeline();
+
   // Create progress bar
-  let progressBar = document.querySelector('.timeline-progress');
-  if (!progressBar) {
-    progressBar = document.createElement('div');
-    progressBar.className = 'timeline-progress';
-    document.body.appendChild(progressBar);
-  }
+  progressBarEl = document.createElement('div');
+  progressBarEl.className = 'timeline-progress';
+  document.body.appendChild(progressBarEl);
 
   // Update progress bar on scroll
-  function updateProgress() {
+  scrollHandler = function updateProgress() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
-  }
+    if (progressBarEl) {
+      progressBarEl.style.width = progress + '%';
+    }
+  };
 
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
+  window.addEventListener('scroll', scrollHandler, { passive: true });
+  scrollHandler();
 
   // Intersection Observer for reveal animations
-  const observer = new IntersectionObserver(
+  timelineObserver = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -161,8 +192,8 @@ function initTimelineScroll() {
 
   const items = document.querySelectorAll('.timeline__item, .timeline__quote');
   for (const item of items) {
-    observer.observe(item);
+    timelineObserver.observe(item);
   }
 }
 
-export default { renderTimeline };
+export default { renderTimeline, cleanupTimeline };

@@ -6,6 +6,7 @@
 import { getAllMemories, saveMemory } from './memory-store.js';
 import { generateCaption } from './ai-engine.js';
 import { stages } from './data/stages.js';
+import { escapeHtml, escapeAttr } from './utils.js';
 
 /**
  * Render the food memories view
@@ -160,7 +161,7 @@ export function renderFoodMemories() {
 function renderFoodSection(title, items) {
   const section = document.createElement('div');
   section.className = 'food-section';
-  section.innerHTML = `<h2 class="food-section__title">${title}</h2>`;
+  section.innerHTML = `<h2 class="food-section__title">${escapeHtml(title)}</h2>`;
 
   const grid = document.createElement('div');
   grid.className = 'food-grid';
@@ -172,15 +173,15 @@ function renderFoodSection(title, items) {
 
     let photoHtml = '';
     if (item.photo) {
-      photoHtml = `<img class="food-card__photo" src="${item.photo}" alt="${item.dishName}">`;
+      photoHtml = `<img class="food-card__photo" src="${escapeAttr(item.photo)}" alt="${escapeAttr(item.dishName)}">`;
     }
 
     card.innerHTML = `
       <div class="food-card__icon">\u{1F37D}\u{FE0F}</div>
       ${photoHtml}
-      <h3 class="food-card__name">${item.dishName}</h3>
-      <p class="food-card__memory">${item.memoryTitle}</p>
-      <p class="food-card__caption">${caption}</p>
+      <h3 class="food-card__name">${escapeHtml(item.dishName)}</h3>
+      <p class="food-card__memory">${escapeHtml(item.memoryTitle)}</p>
+      <p class="food-card__caption">${escapeHtml(caption)}</p>
     `;
 
     grid.appendChild(card);

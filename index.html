@@ -27,6 +27,11 @@
   <!-- Navigation -->
   <nav class="nav nav--hidden" role="navigation" aria-label="Main navigation">
     <a href="#/" class="nav__brand">From Her Hands</a>
+    <button class="nav__hamburger" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="nav__hamburger-line"></span>
+      <span class="nav__hamburger-line"></span>
+      <span class="nav__hamburger-line"></span>
+    </button>
     <ul class="nav__links">
       <li><a href="#/journey" class="nav__link">Journey</a></li>
       <li><a href="#/timeline" class="nav__link">Timeline</a></li>
@@ -51,74 +56,77 @@
 
   <!-- Main Content -->
   <main>
-    <!-- Why This Exists -->
-    <section class="section section--centered section--warm" id="why">
-      <div class="container container--content">
-        <h2 class="section__title animate-on-scroll">Why this exists</h2>
-        <p class="section__content animate-on-scroll">
-          Some stories are never told out loud. They live in the warmth of a folded blanket, 
-          the smell of spices at dawn, the quiet sacrifice of a woman who gave everything 
-          and asked for nothing in return. This is a space to remember, to honor, and to 
-          finally say what was always felt but never spoken.
-        </p>
-      </div>
-    </section>
+    <!-- Landing Sections -->
+    <div id="landing-sections">
+      <!-- Why This Exists -->
+      <section class="section section--centered section--warm" id="why">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Why this exists</h2>
+          <p class="section__content animate-on-scroll">
+            Some stories are never told out loud. They live in the warmth of a folded blanket, 
+            the smell of spices at dawn, the quiet sacrifice of a woman who gave everything 
+            and asked for nothing in return. This is a space to remember, to honor, and to 
+            finally say what was always felt but never spoken.
+          </p>
+        </div>
+      </section>
 
-    <!-- Life Through Memories -->
-    <section class="section section--centered" id="memories">
-      <div class="container container--content">
-        <h2 class="section__title animate-on-scroll">Life through memories</h2>
-        <p class="section__content animate-on-scroll">
-          Every memory is a thread in the fabric she wove around your life. The lullabies 
-          hummed at midnight, the lunches packed with love, the silent prayers whispered 
-          when you walked out the door. Each one a testament to a love so constant 
-          it became invisible.
-        </p>
-      </div>
-    </section>
+      <!-- Life Through Memories -->
+      <section class="section section--centered" id="memories">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Life through memories</h2>
+          <p class="section__content animate-on-scroll">
+            Every memory is a thread in the fabric she wove around your life. The lullabies 
+            hummed at midnight, the lunches packed with love, the silent prayers whispered 
+            when you walked out the door. Each one a testament to a love so constant 
+            it became invisible.
+          </p>
+        </div>
+      </section>
 
-    <!-- The Distance Between Home and Work -->
-    <section class="section section--centered section--warm" id="distance">
-      <div class="container container--content">
-        <h2 class="section__title animate-on-scroll">The distance between home and work</h2>
-        <p class="section__content animate-on-scroll">
-          She traveled that distance every day so you would never have to feel its weight. 
-          The early mornings, the late returns, the tired eyes that still found the energy 
-          to ask about your day. The miles she covered were measured not in kilometers, 
-          but in devotion.
-        </p>
-      </div>
-    </section>
+      <!-- The Distance Between Home and Work -->
+      <section class="section section--centered section--warm" id="distance">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">The distance between home and work</h2>
+          <p class="section__content animate-on-scroll">
+            She traveled that distance every day so you would never have to feel its weight. 
+            The early mornings, the late returns, the tired eyes that still found the energy 
+            to ask about your day. The miles she covered were measured not in kilometers, 
+            but in devotion.
+          </p>
+        </div>
+      </section>
 
-    <!-- Meals That Raised Us -->
-    <section class="section section--centered" id="meals">
-      <div class="container container--content">
-        <h2 class="section__title animate-on-scroll">Meals that raised us</h2>
-        <p class="section__content animate-on-scroll">
-          Her kitchen was her language of love. Every dish carried a message: 
-          you are cared for, you are nourished, you are home. The recipes passed 
-          down through generations, adapted with her own touch, became the flavors 
-          that defined comfort itself.
-        </p>
-      </div>
-    </section>
+      <!-- Meals That Raised Us -->
+      <section class="section section--centered" id="meals">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Meals that raised us</h2>
+          <p class="section__content animate-on-scroll">
+            Her kitchen was her language of love. Every dish carried a message: 
+            you are cared for, you are nourished, you are home. The recipes passed 
+            down through generations, adapted with her own touch, became the flavors 
+            that defined comfort itself.
+          </p>
+        </div>
+      </section>
 
-    <!-- A Mother's Invisible Timeline -->
-    <section class="section section--centered section--warm" id="timeline">
-      <div class="container container--content">
-        <h2 class="section__title animate-on-scroll">A mother's invisible timeline</h2>
-        <p class="section__content animate-on-scroll">
-          Her life unfolds in the margins of yours. The moments she set aside her dreams 
-          so yours could grow. The birthdays she made magical, the illnesses she nursed 
-          through the night, the milestones she celebrated more than you did. 
-          Her timeline is written in your achievements.
-        </p>
-      </div>
-    </section>
+      <!-- A Mother's Invisible Timeline -->
+      <section class="section section--centered section--warm" id="timeline-section">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">A mother's invisible timeline</h2>
+          <p class="section__content animate-on-scroll">
+            Her life unfolds in the margins of yours. The moments she set aside her dreams 
+            so yours could grow. The birthdays she made magical, the illnesses she nursed 
+            through the night, the milestones she celebrated more than you did. 
+            Her timeline is written in your achievements.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- App Content Container (for router) -->
+    <div id="app-content"></div>
   </main>
-
-  <!-- App Content Container (for router) -->
-  <div id="app-content"></div>
 
   <!-- Scripts -->
   <script type="module" src="js/app.js"></script>

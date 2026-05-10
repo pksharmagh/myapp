@@ -7,10 +7,27 @@ import { initParticles } from './particles.js';
 import { initAnimations } from './animations.js';
 import { registerRoute, navigate, initRouter } from './router.js';
 import { renderMemoryBuilder } from './memory-builder.js';
-import { renderTimeline } from './timeline-viewer.js';
+import { renderTimeline, cleanupTimeline } from './timeline-viewer.js';
 import { renderFoodMemories } from './food-memories.js';
 import { renderPlaceMemories } from './place-memories.js';
 import { renderTribute } from './tribute.js';
+
+/**
+ * Toggle visibility of landing page elements based on route
+ */
+function updateLandingVisibility() {
+  const hash = window.location.hash || '#/';
+  const hero = document.getElementById('hero');
+  const landingSections = document.getElementById('landing-sections');
+  const isLanding = hash === '#/' || hash === '';
+
+  if (hero) {
+    hero.style.display = isLanding ? '' : 'none';
+  }
+  if (landingSections) {
+    landingSections.style.display = isLanding ? '' : 'none';
+  }
+}
 
 /**
  * Set up the landing page interactions
@@ -26,11 +43,32 @@ function setupLanding() {
 }
 
 /**
- * Set up navigation visibility
+ * Set up navigation visibility and hamburger menu
  */
 function setupNavigation() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
+
+  const hamburger = nav.querySelector('.nav__hamburger');
+  const navLinks = nav.querySelector('.nav__links');
+
+  // Hamburger menu toggle
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function () {
+      const isOpen = navLinks.classList.toggle('nav__links--open');
+      hamburger.classList.toggle('nav__hamburger--open', isOpen);
+      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close menu when a link is clicked
+    navLinks.addEventListener('click', function (e) {
+      if (e.target.classList.contains('nav__link')) {
+        navLinks.classList.remove('nav__links--open');
+        hamburger.classList.remove('nav__hamburger--open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
 
   // Show/hide nav based on route and scroll
   function updateNavVisibility() {
@@ -106,6 +144,19 @@ function init() {
   // Set up routing
   setupRoutes();
   initRouter('#app-content');
+
+  // Toggle landing visibility on route change
+  window.addEventListener('hashchange', function () {
+    updateLandingVisibility();
+    // Cleanup timeline when navigating away
+    const hash = window.location.hash || '#/';
+    if (hash !== '#/timeline') {
+      cleanupTimeline();
+    }
+  });
+
+  // Set initial visibility
+  updateLandingVisibility();
 }
 
 // Initialize when DOM is ready

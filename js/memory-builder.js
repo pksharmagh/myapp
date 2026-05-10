@@ -9,6 +9,7 @@ import { saveMemory, getMemories, deleteMemory, reorderMemories } from './memory
 import { generateMotherPerspective } from './ai-engine.js';
 import { createPhotoUploader } from './photo-upload.js';
 import { createVoiceRecorder } from './voice-recorder.js';
+import { escapeHtml, escapeAttr } from './utils.js';
 
 let expandedStageId = null;
 let editingMemory = null;
@@ -196,7 +197,7 @@ function renderMemoryCard(memory, stage) {
     content.appendChild(thumb);
   }
 
-  // Mother's perspective
+  // Mother's perspective - use stored value for stability
   const perspective = memory._motherPerspective || generateMotherPerspective(
     (memory.description || '') + ' ' + (memory.emotionalMemory || ''),
     stage.id
@@ -367,9 +368,22 @@ function renderMemoryForm(stage, memory) {
 
     if (isEditing) {
       memoryData.id = memory.id;
+      // Preserve existing perspective if text has not changed
+      if (memory._motherPerspective && memoryData.description === memory.description) {
+        memoryData._motherPerspective = memory._motherPerspective;
+      }
     }
 
-    saveMemory(stage.id, memoryData);
+    // Generate and store mother's perspective if not already present
+    if (!memoryData._motherPerspective) {
+      const perspText = (memoryData.description || '') + ' ' + (memoryData.emotionalMemory || '');
+      memoryData._motherPerspective = generateMotherPerspective(perspText, stage.id);
+    }
+
+    const result = saveMemory(stage.id, memoryData);
+    if (!result.saved) {
+      alert('Unable to save: storage is full. Try removing some photos or memories to free space.');
+    }
     editingMemory = null;
     rerender();
   });
@@ -470,27 +484,6 @@ function rerender() {
   if (!parent) return;
   const newContainer = renderMemoryBuilder();
   parent.replaceChild(newContainer, container);
-}
-
-/**
- * Escape HTML entities for textarea content
- */
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
-
-/**
- * Escape attribute values
- */
-function escapeAttr(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
 }
 
 export default { renderMemoryBuilder };
