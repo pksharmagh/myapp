@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Animations - Keyframes and Scroll-Triggered Utilities
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Keyframe Definitions
+   -------------------------------------------------------------------------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.2);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.2);
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes grainAnimation {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-2px, -1px); }
+  20% { transform: translate(1px, 2px); }
+  30% { transform: translate(-1px, -2px); }
+  40% { transform: translate(2px, 1px); }
+  50% { transform: translate(-2px, 2px); }
+  60% { transform: translate(1px, -1px); }
+  70% { transform: translate(-1px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  90% { transform: translate(-2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    box-shadow: 0 0 5px rgba(212, 165, 116, 0.2);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(212, 165, 116, 0.5);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes revealFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-Triggered Animation Utility Classes
+   -------------------------------------------------------------------------- */
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity var(--transition-slower),
+    transform var(--transition-slower);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Directional variants */
+.animate-on-scroll--left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition:
+    opacity var(--transition-slower),
+    transform var(--transition-slower);
+}
+
+.animate-on-scroll--left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-on-scroll--right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition:
+    opacity var(--transition-slower),
+    transform var(--transition-slower);
+}
+
+.animate-on-scroll--right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale variant */
+.animate-on-scroll--scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity var(--transition-slower),
+    transform var(--transition-slower);
+}
+
+.animate-on-scroll--scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   Stagger Delays for Sequential Reveals
+   -------------------------------------------------------------------------- */
+
+.animate-on-scroll:nth-child(1) { transition-delay: 0s; }
+.animate-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+.animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+.animate-on-scroll:nth-child(4) { transition-delay: 0.3s; }
+.animate-on-scroll:nth-child(5) { transition-delay: 0.4s; }
+
+/* --------------------------------------------------------------------------
+   Reduced Motion Preference
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll,
+  .animate-on-scroll--left,
+  .animate-on-scroll--right,
+  .animate-on-scroll--scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .film-grain {
+    animation: none;
+  }
+
+  .particle {
+    animation: none;
+    display: none;
+  }
+
+  .scroll-indicator__arrow {
+    animation: none;
+  }
+}

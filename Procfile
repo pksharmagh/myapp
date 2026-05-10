@@ -1,1 +1,1 @@
-web: java -jar employee-management-0.0.1-SNAPSHOT.jar
+web: python3 -m http.server 8080
