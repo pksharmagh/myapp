@@ -8,6 +8,68 @@ import { generateSummary, generateTribute, generateTitle } from './ai-engine.js'
 import { stages } from './data/stages.js';
 import { escapeHtml, escapeAttr } from './utils.js';
 
+const TRIBUTE_CACHE_KEY = 'fromHerHands_tribute_cache';
+
+/**
+ * Compute a simple content hash from memory IDs and titles to detect changes.
+ * @param {Array} flatMemories
+ * @returns {string}
+ */
+function computeMemoryHash(flatMemories) {
+  const keys = flatMemories.map((m) => (m.id || '') + ':' + (m.title || ''));
+  return keys.join('|');
+}
+
+/**
+ * Load cached tribute data from localStorage.
+ * @returns {object|null}
+ */
+function loadTributeCache() {
+  try {
+    const raw = localStorage.getItem(TRIBUTE_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Save tribute data to localStorage cache.
+ * @param {string} hash
+ * @param {object} data
+ */
+function saveTributeCache(hash, data) {
+  try {
+    localStorage.setItem(TRIBUTE_CACHE_KEY, JSON.stringify({ hash, ...data }));
+  } catch (e) {
+    // Quota exceeded or other storage error - proceed without caching
+  }
+}
+
+/**
+ * Get or generate tribute text (title, summary, tributeText).
+ * Returns cached values if memories have not changed.
+ * @param {Array} flatMemories
+ * @returns {{ title: string, summary: string, tributeText: string }}
+ */
+function getTributeText(flatMemories) {
+  const hash = computeMemoryHash(flatMemories);
+  const cached = loadTributeCache();
+
+  if (cached && cached.hash === hash) {
+    return { title: cached.title, summary: cached.summary, tributeText: cached.tributeText };
+  }
+
+  const title = generateTitle(flatMemories);
+  const summary = generateSummary(flatMemories);
+  const tributeText = generateTribute(flatMemories);
+
+  saveTributeCache(hash, { title, summary, tributeText });
+
+  return { title, summary, tributeText };
+}
+
 /**
  * Render the tribute view
  * @returns {HTMLElement}
@@ -44,14 +106,13 @@ export function renderTribute() {
   }
 
   // Section 1: Cinematic Title
-  const title = generateTitle(flatMemories);
+  const { title, summary, tributeText } = getTributeText(flatMemories);
   const titleSection = document.createElement('section');
   titleSection.className = 'tribute__section';
   titleSection.innerHTML = `<h1 class="tribute__title">${escapeHtml(title)}</h1>`;
   container.appendChild(titleSection);
 
   // Section 2: Life Summary
-  const summary = generateSummary(flatMemories);
   const summarySection = document.createElement('section');
   summarySection.className = 'tribute__section';
   summarySection.innerHTML = `<div class="tribute__summary">${escapeHtml(summary)}</div>`;
@@ -82,7 +143,6 @@ export function renderTribute() {
   container.appendChild(montageSection);
 
   // Section 4: Tribute Card
-  const tributeText = generateTribute(flatMemories);
   const closingLine = 'No matter how far life carried you, some hands still waited to feed you.';
 
   const cardSection = document.createElement('section');

@@ -7,7 +7,7 @@ import { initParticles } from './particles.js';
 import { initAnimations } from './animations.js';
 import { registerRoute, navigate, initRouter } from './router.js';
 import { renderMemoryBuilder } from './memory-builder.js';
-import { renderTimeline, cleanupTimeline } from './timeline-viewer.js';
+import { renderTimeline } from './timeline-viewer.js';
 import { renderFoodMemories } from './food-memories.js';
 import { renderPlaceMemories } from './place-memories.js';
 import { renderTribute } from './tribute.js';
@@ -148,11 +148,6 @@ function init() {
   // Toggle landing visibility on route change
   window.addEventListener('hashchange', function () {
     updateLandingVisibility();
-    // Cleanup timeline when navigating away
-    const hash = window.location.hash || '#/';
-    if (hash !== '#/timeline') {
-      cleanupTimeline();
-    }
   });
 
   // Set initial visibility

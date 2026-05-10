@@ -6,6 +6,7 @@
 const routes = new Map();
 let currentRoute = null;
 let appContainer = null;
+let transitionId = 0;
 
 /**
  * Register a route with its handler
@@ -44,12 +45,17 @@ async function handleRouteChange() {
   const handler = routes.get(hash);
   if (!handler) return;
 
+  const myTransitionId = ++transitionId;
+
   if (appContainer) {
     // Fade out
     appContainer.style.opacity = '0';
     appContainer.style.transition = 'opacity 0.4s ease';
 
     await new Promise((resolve) => setTimeout(resolve, 400));
+
+    // Bail if superseded by a newer transition
+    if (myTransitionId !== transitionId) return;
 
     // Execute route handler
     const content = handler();
