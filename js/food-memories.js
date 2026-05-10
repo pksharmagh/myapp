@@ -128,13 +128,18 @@ export function renderFoodMemories() {
 
     if (!dishName) return;
 
-    saveMemory('festivals-food', {
+    const result = saveMemory('festivals-food', {
       title: dishName,
       description: description,
       favFood: dishName,
       occasion: occasion,
       text: description
     });
+
+    if (!result.saved) {
+      alert('Unable to save: storage is full. Try removing some photos or memories to free space.');
+      return;
+    }
 
     // Reset form
     form.querySelector('#food-dish-name').value = '';

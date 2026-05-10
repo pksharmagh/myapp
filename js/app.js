@@ -7,7 +7,7 @@ import { initParticles } from './particles.js';
 import { initAnimations } from './animations.js';
 import { registerRoute, navigate, initRouter } from './router.js';
 import { renderMemoryBuilder } from './memory-builder.js';
-import { renderTimeline } from './timeline-viewer.js';
+import { renderTimeline, cleanupTimeline } from './timeline-viewer.js';
 import { renderFoodMemories } from './food-memories.js';
 import { renderPlaceMemories } from './place-memories.js';
 import { renderTribute } from './tribute.js';
@@ -130,6 +130,11 @@ function setupRoutes() {
 }
 
 /**
+ * Track the previous hash for cleanup purposes
+ */
+let previousHash = window.location.hash || '#/';
+
+/**
  * Initialize the application
  */
 function init() {
@@ -145,8 +150,16 @@ function init() {
   setupRoutes();
   initRouter('#app-content');
 
-  // Toggle landing visibility on route change
+  // Toggle landing visibility on route change and handle cleanup
   window.addEventListener('hashchange', function () {
+    const newHash = window.location.hash || '#/';
+
+    // Clean up timeline resources when navigating away from timeline
+    if (previousHash === '#/timeline' && newHash !== '#/timeline') {
+      cleanupTimeline();
+    }
+
+    previousHash = newHash;
     updateLandingVisibility();
   });
 
