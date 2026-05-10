@@ -1,0 +1,291 @@
+/* ==========================================================================
+   Place & Memory Map Styles
+   Abstract visual map with place markers and connection paths
+   ========================================================================== */
+
+/* Places Container */
+.places {
+  padding: var(--space-3xl) var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.places__header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+.places__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  color: var(--color-brown-deep);
+  margin-bottom: var(--space-md);
+  line-height: var(--leading-tight);
+}
+
+.places__subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  color: var(--color-text-light);
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  line-height: var(--leading-relaxed);
+}
+
+/* Abstract Map Container */
+.places__map {
+  position: relative;
+  min-height: 500px;
+  background: var(--color-beige);
+  border-radius: var(--radius-xl);
+  padding: var(--space-3xl);
+  overflow: hidden;
+}
+
+/* SVG Connection Lines */
+.places__connections {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-base);
+}
+
+.places__connections path {
+  fill: none;
+  stroke: var(--color-gold-light);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+  opacity: 0.6;
+}
+
+/* Place Markers Grid */
+.places__markers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2xl);
+  position: relative;
+  z-index: var(--z-above);
+  min-height: 400px;
+}
+
+/* Individual Place Marker */
+.place-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform var(--transition-base);
+}
+
+.place-marker:hover {
+  transform: scale(1.1);
+}
+
+.place-marker__circle {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  transition: box-shadow var(--transition-base);
+  position: relative;
+}
+
+.place-marker:hover .place-marker__circle {
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.place-marker__count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: var(--color-brown-deep);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.place-marker__icon {
+  font-size: var(--text-lg);
+}
+
+.place-marker__label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-top: var(--space-sm);
+  text-align: center;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Place Detail Panel */
+.place-detail {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--color-white);
+  box-shadow: var(--shadow-xl);
+  z-index: var(--z-modal);
+  overflow-y: auto;
+  transition: right var(--transition-base);
+  padding: var(--space-2xl);
+}
+
+.place-detail--open {
+  right: 0;
+}
+
+.place-detail__close {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-beige);
+  border: none;
+  cursor: pointer;
+  font-size: var(--text-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: background var(--transition-base);
+}
+
+.place-detail__close:hover {
+  background: var(--color-beige-dark);
+}
+
+.place-detail__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  color: var(--color-brown-deep);
+  margin-bottom: var(--space-sm);
+  padding-right: var(--space-3xl);
+}
+
+.place-detail__count {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+}
+
+/* Place Detail Memory List */
+.place-detail__memory {
+  padding: var(--space-md);
+  background: var(--color-beige);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+.place-detail__memory-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.place-detail__memory-text {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: var(--leading-normal);
+}
+
+.place-detail__memory-photo {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-sm);
+}
+
+/* Overlay backdrop */
+.places__overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--color-overlay-medium);
+  z-index: var(--z-overlay);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.places__overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Empty State */
+.places-empty {
+  text-align: center;
+  padding: var(--space-5xl) var(--space-xl);
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+}
+
+.places-empty__icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-lg);
+  opacity: 0.6;
+}
+
+.places-empty__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+}
+
+.places-empty__text {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text-light);
+  line-height: var(--leading-relaxed);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .places {
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .places__map {
+    padding: var(--space-xl);
+    min-height: 300px;
+  }
+
+  .places__markers {
+    gap: var(--space-lg);
+    min-height: 250px;
+  }
+
+  .place-marker__circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .place-detail {
+    width: 100%;
+    max-width: 100vw;
+  }
+}

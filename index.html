@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="From Her Hands - A cinematic memory journey about childhood, distance, food, home, and the mother who silently shaped it all.">
+  <title>From Her Hands</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/memory-builder.css">
+  <link rel="stylesheet" href="css/timeline.css">
+  <link rel="stylesheet" href="css/food-memories.css">
+  <link rel="stylesheet" href="css/places.css">
+  <link rel="stylesheet" href="css/tribute.css">
+</head>
+<body>
+  <!-- Film Grain Overlay -->
+  <div class="film-grain" aria-hidden="true"></div>
+
+  <!-- Floating Particles -->
+  <div class="particles-container" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="nav nav--hidden" role="navigation" aria-label="Main navigation">
+    <a href="#/" class="nav__brand">From Her Hands</a>
+    <button class="nav__hamburger" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
+      <span class="nav__hamburger-line"></span>
+      <span class="nav__hamburger-line"></span>
+      <span class="nav__hamburger-line"></span>
+    </button>
+    <ul class="nav__links">
+      <li><a href="#/journey" class="nav__link">Journey</a></li>
+      <li><a href="#/timeline" class="nav__link">Timeline</a></li>
+      <li><a href="#/food" class="nav__link">Food</a></li>
+      <li><a href="#/places" class="nav__link">Places</a></li>
+      <li><a href="#/tribute" class="nav__link">Tribute</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero">
+    <div class="hero__content">
+      <h1 class="hero__headline">Every stage of your life carried her fingerprints.</h1>
+      <p class="hero__subheadline">A cinematic memory journey about childhood, distance, food, home, and the mother who silently shaped it all.</p>
+      <button class="cta-button" type="button" aria-label="Start your memory journey">Start My Story</button>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-indicator__arrow"></div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Landing Sections -->
+    <div id="landing-sections">
+      <!-- Why This Exists -->
+      <section class="section section--centered section--warm" id="why">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Why this exists</h2>
+          <p class="section__content animate-on-scroll">
+            Some stories are never told out loud. They live in the warmth of a folded blanket, 
+            the smell of spices at dawn, the quiet sacrifice of a woman who gave everything 
+            and asked for nothing in return. This is a space to remember, to honor, and to 
+            finally say what was always felt but never spoken.
+          </p>
+        </div>
+      </section>
+
+      <!-- Life Through Memories -->
+      <section class="section section--centered" id="memories">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Life through memories</h2>
+          <p class="section__content animate-on-scroll">
+            Every memory is a thread in the fabric she wove around your life. The lullabies 
+            hummed at midnight, the lunches packed with love, the silent prayers whispered 
+            when you walked out the door. Each one a testament to a love so constant 
+            it became invisible.
+          </p>
+        </div>
+      </section>
+
+      <!-- The Distance Between Home and Work -->
+      <section class="section section--centered section--warm" id="distance">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">The distance between home and work</h2>
+          <p class="section__content animate-on-scroll">
+            She traveled that distance every day so you would never have to feel its weight. 
+            The early mornings, the late returns, the tired eyes that still found the energy 
+            to ask about your day. The miles she covered were measured not in kilometers, 
+            but in devotion.
+          </p>
+        </div>
+      </section>
+
+      <!-- Meals That Raised Us -->
+      <section class="section section--centered" id="meals">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">Meals that raised us</h2>
+          <p class="section__content animate-on-scroll">
+            Her kitchen was her language of love. Every dish carried a message: 
+            you are cared for, you are nourished, you are home. The recipes passed 
+            down through generations, adapted with her own touch, became the flavors 
+            that defined comfort itself.
+          </p>
+        </div>
+      </section>
+
+      <!-- A Mother's Invisible Timeline -->
+      <section class="section section--centered section--warm" id="timeline-section">
+        <div class="container container--content">
+          <h2 class="section__title animate-on-scroll">A mother's invisible timeline</h2>
+          <p class="section__content animate-on-scroll">
+            Her life unfolds in the margins of yours. The moments she set aside her dreams 
+            so yours could grow. The birthdays she made magical, the illnesses she nursed 
+            through the night, the milestones she celebrated more than you did. 
+            Her timeline is written in your achievements.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- App Content Container (for router) -->
+    <div id="app-content"></div>
+  </main>
+
+  <!-- Scripts -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
