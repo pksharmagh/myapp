@@ -6,6 +6,7 @@
 import { initParticles } from './particles.js';
 import { initAnimations } from './animations.js';
 import { registerRoute, navigate, initRouter } from './router.js';
+import { renderMemoryBuilder } from './memory-builder.js';
 
 /**
  * Set up the landing page interactions
@@ -55,7 +56,7 @@ function setupRoutes() {
   });
 
   registerRoute('#/journey', () => {
-    return '<section class="section section--centered"><div class="container"><h2 class="section__title">Your Memory Journey</h2><p class="section__content">This section is coming soon...</p></div></section>';
+    return renderMemoryBuilder();
   });
 
   registerRoute('#/timeline', () => {
